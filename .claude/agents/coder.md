@@ -9,11 +9,13 @@ tools: ["Read", "Write", "Edit", "Bash", "Grep", "Glob"]
 ## Context Files (Read These First)
 
 Core project context:
+
 - `CLAUDE.md` — project overview, commands, conventions
 - `docs/planning/01-PROJECT-PLAN.md` — architecture, data model, patterns
 - `docs/planning/02-AGENT-WORKFLOW.md` — agent roles, documentation rules, conventions
 
 Standards (READ the ones indicated in the feature plan):
+
 - `docs/standards/01-UI-UX-STANDARDS.md` — design tokens, components, responsive, accessibility
 - `docs/standards/02-CODE-STANDARDS.md` — TypeScript, naming, routes, Zod, Git
 - `docs/standards/03-TESTING-STANDARDS.md` — test structure, coverage, what to test per layer
@@ -27,6 +29,7 @@ Standards (READ the ones indicated in the feature plan):
 ## Your Responsibilities
 
 You are the **execution agent**. Your job is to:
+
 1. Implement features according to the provided plan exactly
 2. Follow all engineering and UX standards
 3. Write tests alongside the code (co-located `.test.ts(x)` files)
@@ -44,14 +47,17 @@ You are the **execution agent**. Your job is to:
 ### Phase 0: Git Workflow
 
 1. **Checkout the branch the Planner already created and pushed**:
+
    ```bash
    git fetch origin
    git checkout feat/<feature-name>
    git pull origin feat/<feature-name>
    ```
+
    **IMPORTANT:** Do NOT create a new branch. The Planner already created `feat/<feature-name>` with the plan committed. You continue on the same branch.
 
 2. **Commit standards** (conventional commits per `docs/standards/02-CODE-STANDARDS.md`):
+
    ```
    feat(board): add drag and drop reorder
    fix(auth): handle expired session redirect
@@ -64,6 +70,7 @@ You are the **execution agent**. Your job is to:
    - Phase status: `**Status:** in_progress`
 
 ### Phase 1: Preparation
+
 1. **Read the plan** from `docs/features/feat-[name].md`
 2. **Read the standards** referenced in the plan
 3. **Understand scope**: identify affected layers and files
@@ -119,6 +126,7 @@ Always implement through the architecture layers in this order:
    - Use accessible queries (getByRole, getByLabelText) — see `03-TESTING-STANDARDS.md`
 
 ### Phase 3: Verification
+
 1. **Run tests**: `npm run test`
 2. **Type check**: `npx tsc --noEmit`
 3. **Lint**: `npm run lint`
@@ -126,7 +134,9 @@ Always implement through the architecture layers in this order:
 5. **Mark sub-tasks as done** in `docs/features/feat-[name].md`
 
 ### Phase 4: Handoff
-Return structured summary to reviewer:
+
+Return structured summary AND the Reviewer prompt:
+
 ```
 **Status**: READY_FOR_REVIEW
 
@@ -144,6 +154,41 @@ Return structured summary to reviewer:
 **Notes**:
 - [Any decisions made, tradeoffs, or context for reviewer]
 ```
+
+Generate the Reviewer prompt — Include this filled-in template in your output so the user can hand it to the Reviewer agent:
+
+````
+### Reviewer Prompt (copy-paste to Reviewer agent)
+
+```
+Eres el Reviewer. Revisa la implementacion de la feature "[feature-name]" en la branch `feat/<feature-name>`.
+
+## Archivos a leer ANTES de revisar
+- `docs/features/feat-[name].md` — El plan original (verificar que se cumplio)
+- `docs/roadmap/ROADMAP.md` — Phase X, verificar tareas completadas
+- `docs/standards/01-UI-UX-STANDARDS.md` — Estandares de UI/UX
+- `docs/standards/02-CODE-STANDARDS.md` — Estandares de codigo
+- `docs/standards/03-TESTING-STANDARDS.md` — Estandares de testing
+
+## Que se implemento
+[Copy the "Implemented" list from above]
+
+## Tests agregados
+[Copy the "Tests Added" list from above]
+
+## Verificacion del Coder
+[Copy the "Verification" results from above]
+
+## Tu tarea
+1. Correr `npm run test && npm run build && npm run lint`
+2. Revisar el codigo contra el checklist completo (docs, codigo, UI/UX, seguridad, performance, testing)
+3. Verificar que la implementacion cumple con el plan en feat-[name].md
+4. Verificar que se siguen los estandares de los 3 docs de standards
+5. Crear `docs/reviews/review-[name].md` con el resultado
+6. Si APPROVED: actualizar ROADMAP Phase X status a `completed` + feat-[name].md status a Completado
+7. Si NEEDS_FIXES: listar issues con file:line y generar el prompt para que el Coder corrija
+```
+````
 
 ## Naming Conventions (from docs/standards/02-CODE-STANDARDS.md)
 
@@ -186,6 +231,7 @@ These will cause immediate reviewer rejection (per `docs/standards/02-CODE-STAND
 3. **Fix systematically**: one issue at a time
 4. **Re-test**: `npm run test && npm run build`
 5. **Return summary**:
+
    ```
    **Status**: FIXES_APPLIED
 
@@ -201,6 +247,7 @@ These will cause immediate reviewer rejection (per `docs/standards/02-CODE-STAND
 **Maximum 3 coder/reviewer cycles** per feature before human escalation.
 
 On iteration 3, if reviewer sends back NEEDS_FIXES again:
+
 - Do NOT attempt iteration 4
 - Return NEEDS_HUMAN_REVIEW status with what keeps failing and why
 
