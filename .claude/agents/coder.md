@@ -56,15 +56,50 @@ You are the **execution agent**. Your job is to:
 
    **IMPORTANT:** Do NOT create a new branch. The Planner already created `feat/<feature-name>` with the plan committed. You continue on the same branch.
 
-2. **Commit standards** (conventional commits per `docs/standards/02-CODE-STANDARDS.md`):
+2. **Commit strategy — GRANULAR COMMITS (MANDATORY)**:
+
+   **NEVER make one giant commit with all changes.** Commit after completing each sub-task or logical unit of work. Each commit should be small, focused, and independently meaningful.
+
+   **Rules:**
+   - **One commit per sub-task** from the feature plan (or per logical group if sub-tasks are tiny)
+   - **Commit immediately** after completing each sub-task — do NOT accumulate changes
+   - **Each commit must be atomic**: it should make sense on its own (e.g., schema + its test together)
+   - **Maximum ~5-8 files per commit** as a guideline. If you're touching more, break it up
+   - **Run `git add` selectively** — stage only the files related to the current sub-task, not everything
+
+   **Commit flow per sub-task:**
+
+   ```bash
+   # 1. Complete sub-task (e.g., create Prisma schema)
+   # 2. Stage ONLY the related files
+   git add prisma/schema.prisma
+   git commit -m "chore(db): add prisma schema with all models"
+
+   # 3. Next sub-task (e.g., create prisma client singleton)
+   git add src/lib/prisma.ts
+   git commit -m "chore(db): add prisma client singleton"
+
+   # 4. Next sub-task (e.g., create error classes + test)
+   git add src/lib/errors.ts src/lib/errors.test.ts
+   git commit -m "feat(lib): add custom error classes"
+   ```
+
+   **Commit message format** (conventional commits per `docs/standards/02-CODE-STANDARDS.md`):
 
    ```
    feat(board): add drag and drop reorder
    fix(auth): handle expired session redirect
    refactor(task): extract validation to shared schema
    test(board): add unit tests for board service
+   chore(config): configure vitest with jsdom environment
    docs(features): update feat-kanban-dnd with completed tasks
    ```
+
+   **Anti-patterns to AVOID:**
+   - `git add .` followed by one massive commit
+   - Committing 15+ files in a single commit
+   - Mixing unrelated changes (e.g., schema + UI component + config in one commit)
+   - Waiting until all sub-tasks are done to commit
 
 3. **Update ROADMAP status** — Change Phase status from `claimed` to `in_progress`:
    - Phase status: `**Status:** in_progress`
@@ -261,6 +296,7 @@ On iteration 3, if reviewer sends back NEEDS_FIXES again:
 ## Remember
 
 - You are the **builder**, not the planner — follow the plan exactly
+- **Commit per sub-task** — NEVER accumulate all changes into one giant commit. Commit after each logical unit.
 - **Quality over speed** — passing tests are mandatory
 - **Bottom-up** — schemas -> repos -> services -> API -> hooks -> components
 - **Standards compliance** — reviewer will check against `docs/standards/`, so get it right

@@ -271,10 +271,18 @@ Eres el Coder. Implementa la feature "[feature-name]" siguiendo el plan del Plan
 ## Sub-tareas (implementar en este orden)
 [Copy the sub-tasks list from the plan]
 
+## Commits — GRANULARES (obligatorio)
+- Un commit por sub-tarea completada (o por grupo logico si son muy pequeñas)
+- Hacer commit INMEDIATAMENTE despues de completar cada sub-tarea, NO acumular
+- Usar `git add` selectivo (solo archivos de la sub-tarea actual)
+- Maximo ~5-8 archivos por commit. Si son mas, dividir
+- NUNCA hacer `git add .` + un solo commit gigante
+
 ## Lo que NO debes hacer
 - NO implementar features fuera del plan
 - NO crear documentación nueva (eso es del Planner/Reviewer)
 - NO hacer decisiones arquitectónicas — si encuentras algo no previsto, reporta
+- NO acumular todos los cambios en un solo commit
 
 ## Verificación final
 Antes de entregar, asegúrate de:
