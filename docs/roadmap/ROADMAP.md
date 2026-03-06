@@ -39,7 +39,7 @@ PlanBoard — Kanban Task Manager with drag & drop, auth, and clean architecture
 **Goal:** Working dev environment with database, tooling, and base infrastructure ready to build features on top of.
 
 **Sprint:** 1
-**Status:** pending
+**Status:** claimed
 
 ## Backend / Infra
 - [ ] Create `docker-compose.yml` with PostgreSQL 16
