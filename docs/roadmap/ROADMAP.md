@@ -90,43 +90,46 @@ PlanBoard — Kanban Task Manager with drag & drop, auth, and clean architecture
 **Goal:** Users can register, login (credentials + OAuth), and logout. Protected routes redirect unauthenticated users.
 
 **Sprint:** 1-2
-**Status:** pending
+**Status:** claimed
 
 ## Backend
 
-- [ ] Configure NextAuth (`src/lib/auth.ts` + `src/lib/auth.config.ts`)
-- [ ] Create NextAuth API route (`src/app/api/auth/[...nextauth]/route.ts`)
-- [ ] Set up GitHub OAuth provider
-- [ ] Set up Google OAuth provider
-- [ ] Set up Credentials provider with bcrypt password hashing
-- [ ] Create `auth.schema.ts` (loginSchema, registerSchema)
-- [ ] Create auth service (`src/services/auth.service.ts` — register with password hash)
-- [ ] Create user repository (`src/repositories/user.repository.ts`)
-- [ ] Add session check utility for API routes
+- [ ] Configure NextAuth v5 (`src/lib/auth.ts` + `src/lib/auth.config.ts`) (claimed)
+- [ ] Create NextAuth API route (`src/app/api/auth/[...nextauth]/route.ts`) (claimed)
+- [ ] Set up GitHub OAuth provider (claimed)
+- [ ] Set up Google OAuth provider (claimed)
+- [ ] Set up Credentials provider with bcrypt password hashing (claimed)
+- [ ] Create `auth.schema.ts` (loginSchema, registerSchema) (claimed)
+- [ ] Create auth service (`src/services/auth.service.ts` — register with password hash) (claimed)
+- [ ] Create user repository (`src/repositories/user.repository.ts`) (claimed)
+- [ ] Add session check utility for API routes (claimed)
+- [ ] Create registration API route (`src/app/api/auth/register/route.ts`) (claimed)
+- [ ] Add NextAuth type augmentation (`src/types/next-auth.d.ts`) (claimed)
 
 ## Frontend
 
-- [ ] Create `LoginForm` component (`src/components/auth/login-form.tsx`) with React Hook Form + Zod
-- [ ] Create `RegisterForm` component (`src/components/auth/register-form.tsx`)
-- [ ] Create auth pages (`src/app/(auth)/login/page.tsx`, `src/app/(auth)/register/page.tsx`)
-- [ ] Create `(auth)` layout — centered, no sidebar
-- [ ] Create `useAuth` hook (`src/hooks/useAuth.ts` — session wrapper)
-- [ ] Implement middleware for protected routes (`src/middleware.ts`)
-- [ ] Add OAuth sign-in buttons (GitHub, Google)
+- [ ] Create `LoginForm` component (`src/components/auth/login-form.tsx`) with React Hook Form + Zod (claimed)
+- [ ] Create `RegisterForm` component (`src/components/auth/register-form.tsx`) (claimed)
+- [ ] Create auth pages (`src/app/(auth)/login/page.tsx`, `src/app/(auth)/register/page.tsx`) (claimed)
+- [ ] Create `(auth)` layout — centered, no sidebar (claimed)
+- [ ] Create `useAuth` hook (`src/hooks/useAuth.ts` — session wrapper) (claimed)
+- [ ] Implement middleware for protected routes (`src/middleware.ts`) (claimed)
+- [ ] Add OAuth sign-in buttons (GitHub, Google) (claimed)
+- [ ] Add SessionProvider to root layout (claimed)
 
 ## UI Components (needed by auth)
 
-- [ ] Create `Button` component (`src/components/ui/button.tsx`) — all variants and states
-- [ ] Create `Input` component (`src/components/ui/input.tsx`) — with label, error display
-- [ ] Create `Toast` component/system (`src/components/ui/toast.tsx`)
+- [ ] Create `Button` component (`src/components/ui/button.tsx`) — all variants and states (claimed)
+- [ ] Create `Input` component (`src/components/ui/input.tsx`) — with label, error display (claimed)
+- [ ] Create `Toast` component/system (`src/components/ui/toast.tsx`) (claimed)
 
 ## Tests
 
-- [ ] Unit: `auth.schema.test.ts`
-- [ ] Unit: `auth.service.test.ts`
-- [ ] Component: `login-form.test.tsx`
-- [ ] Component: `register-form.test.tsx`
-- [ ] E2E: `tests/e2e/auth.spec.ts` (register, login, logout, invalid credentials)
+- [ ] Unit: `auth.schema.test.ts` (claimed)
+- [ ] Unit: `auth.service.test.ts` (claimed)
+- [ ] Component: `login-form.test.tsx` (claimed)
+- [ ] Component: `register-form.test.tsx` (claimed)
+- [ ] E2E: `tests/e2e/auth.spec.ts` (register, login, logout, invalid credentials) (claimed)
 
 **Exit criteria:** User can register with email/password, login with credentials or OAuth, session persists, protected routes redirect to `/login`.
 
