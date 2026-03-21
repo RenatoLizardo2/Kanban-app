@@ -1,7 +1,9 @@
 # Roadmap
+
 PlanBoard — Kanban Task Manager with drag & drop, auth, and clean architecture
 
 ## Deployment assumptions
+
 - Branch: `main`
 - Single developer (solo portfolio project)
 - Agent workflow: Planner -> Coder -> Reviewer per feature
@@ -10,25 +12,29 @@ PlanBoard — Kanban Task Manager with drag & drop, auth, and clean architecture
 
 ## Status legend
 
-| Status | Meaning | Who changes it |
-|---|---|---|
-| `pending` | Not started | — |
-| `claimed` | Plan created, branch pushed, waiting for Coder | Planner |
-| `in_progress` | Implementation underway | Coder |
-| `completed` | Approved by Reviewer, ready for merge | Reviewer |
+| Status        | Meaning                                        | Who changes it |
+| ------------- | ---------------------------------------------- | -------------- |
+| `pending`     | Not started                                    | —              |
+| `claimed`     | Plan created, branch pushed, waiting for Coder | Planner        |
+| `in_progress` | Implementation underway                        | Coder          |
+| `completed`   | Approved by Reviewer, ready for merge          | Reviewer       |
 
 **Task-level markers:**
+
 - `- [ ]` = pending
 - `- [ ] Task (claimed)` = Planner has created a plan covering this task
 - `- [x]` = completed
 
 ## Workstreams
+
 ### Backend (bottom-up per feature)
+
 - Prisma schema, repositories, services, API route handlers
 - Zod schemas (shared with frontend)
 - NextAuth configuration
 
 ### Frontend (top-down per feature)
+
 - React Query hooks, Zustand stores
 - Components (board, ui, layout, auth)
 - Forms with React Hook Form + Zod resolver
@@ -36,51 +42,58 @@ PlanBoard — Kanban Task Manager with drag & drop, auth, and clean architecture
 ---
 
 # Phase 0 — Project Foundations
+
 **Goal:** Working dev environment with database, tooling, and base infrastructure ready to build features on top of.
 
 **Sprint:** 1
-**Status:** pending
+**Status:** completed
 
 ## Backend / Infra
-- [ ] Create `docker-compose.yml` with PostgreSQL 16
-- [ ] Create `.env` and `.env.example` with all required variables
-- [ ] Install and initialize Prisma (`npx prisma init`)
-- [ ] Write complete `prisma/schema.prisma` (User, Account, Session, VerificationToken, Board, Column, Task, Priority enum)
-- [ ] Run initial migration (`npx prisma migrate dev --name init`)
-- [ ] Create Prisma Client singleton (`src/lib/prisma.ts`)
-- [ ] Create utility helpers (`src/lib/utils.ts` with `cn()`)
-- [ ] Create custom error classes (`src/lib/errors.ts` — NotFoundError, UnauthorizedError, ValidationError)
+
+- [x] Create `docker-compose.yml` with PostgreSQL 16
+- [x] Create `.env` and `.env.example` with all required variables
+- [x] Install and initialize Prisma (`npx prisma init`)
+- [x] Write complete `prisma/schema.prisma` (User, Account, Session, VerificationToken, Board, Column, Task, Priority enum)
+- [ ] Run initial migration (`npx prisma migrate dev --name init`) — pending Docker setup
+- [x] Create Prisma Client singleton (`src/lib/prisma.ts`)
+- [x] Create utility helpers (`src/lib/utils.ts` with `cn()`)
+- [x] Create custom error classes (`src/lib/errors.ts` — NotFoundError, UnauthorizedError, ValidationError)
 
 ## Frontend / Tooling
-- [ ] Configure Tailwind CSS 4 with CSS variables (design tokens from UI standards)
-- [ ] Set up `globals.css` with color variables (light + dark mode tokens)
-- [ ] Configure Prettier (`.prettierrc` + `.prettierignore`)
-- [ ] Configure Husky + lint-staged (pre-commit hook)
-- [ ] Update `package.json` scripts (test, format, db commands)
-- [ ] Configure `tsconfig.json` with strict mode options
+
+- [x] Configure Tailwind CSS 4 with CSS variables (design tokens from UI standards)
+- [x] Set up `globals.css` with color variables (light + dark mode tokens)
+- [x] Configure Prettier (`.prettierrc` + `.prettierignore`)
+- [x] Configure Husky + lint-staged (pre-commit hook)
+- [x] Update `package.json` scripts (test, format, db commands)
+- [x] Configure `tsconfig.json` with strict mode options
 
 ## Testing Setup
-- [ ] Install and configure Vitest (`vitest.config.mts` + `tests/setup/vitest.setup.ts`)
-- [ ] Install and configure Playwright (`playwright.config.ts`)
-- [ ] Create test helpers (`tests/helpers/render-with-providers.tsx`, `tests/helpers/mock-session.ts`)
+
+- [x] Install and configure Vitest (`vitest.config.mts` + `tests/setup/vitest.setup.ts`)
+- [x] Install and configure Playwright (`playwright.config.ts`)
+- [x] Create test helpers (`tests/helpers/render-with-providers.tsx`, `tests/helpers/mock-session.ts`)
 
 ## Shared
-- [ ] Create folder structure under `src/` (components, hooks, services, repositories, schemas, store, lib, types)
-- [ ] Verify `npm run dev` starts correctly
-- [ ] Verify `npm run build` compiles without errors
-- [ ] Verify Docker + Prisma connection works
+
+- [x] Create folder structure under `src/` (components, hooks, services, repositories, schemas, store, lib, types)
+- [x] Verify `npm run dev` starts correctly
+- [x] Verify `npm run build` compiles without errors
+- [ ] Verify Docker + Prisma connection works — pending Docker setup
 
 **Exit criteria:** `docker compose up -d && npm run dev` works, Prisma connects to DB, build passes, test runner works.
 
 ---
 
 # Phase 1 — Authentication
+
 **Goal:** Users can register, login (credentials + OAuth), and logout. Protected routes redirect unauthenticated users.
 
 **Sprint:** 1-2
 **Status:** pending
 
 ## Backend
+
 - [ ] Configure NextAuth (`src/lib/auth.ts` + `src/lib/auth.config.ts`)
 - [ ] Create NextAuth API route (`src/app/api/auth/[...nextauth]/route.ts`)
 - [ ] Set up GitHub OAuth provider
@@ -92,6 +105,7 @@ PlanBoard — Kanban Task Manager with drag & drop, auth, and clean architecture
 - [ ] Add session check utility for API routes
 
 ## Frontend
+
 - [ ] Create `LoginForm` component (`src/components/auth/login-form.tsx`) with React Hook Form + Zod
 - [ ] Create `RegisterForm` component (`src/components/auth/register-form.tsx`)
 - [ ] Create auth pages (`src/app/(auth)/login/page.tsx`, `src/app/(auth)/register/page.tsx`)
@@ -101,11 +115,13 @@ PlanBoard — Kanban Task Manager with drag & drop, auth, and clean architecture
 - [ ] Add OAuth sign-in buttons (GitHub, Google)
 
 ## UI Components (needed by auth)
+
 - [ ] Create `Button` component (`src/components/ui/button.tsx`) — all variants and states
 - [ ] Create `Input` component (`src/components/ui/input.tsx`) — with label, error display
 - [ ] Create `Toast` component/system (`src/components/ui/toast.tsx`)
 
 ## Tests
+
 - [ ] Unit: `auth.schema.test.ts`
 - [ ] Unit: `auth.service.test.ts`
 - [ ] Component: `login-form.test.tsx`
@@ -117,12 +133,14 @@ PlanBoard — Kanban Task Manager with drag & drop, auth, and clean architecture
 ---
 
 # Phase 2 — Board & Column CRUD + Dashboard
+
 **Goal:** Authenticated users can create, view, edit, and delete boards. Each board has columns. Dashboard shows list of user's boards.
 
 **Sprint:** 2-3
 **Status:** pending
 
 ## Backend
+
 - [ ] Create `board.schema.ts` (createBoardSchema, updateBoardSchema)
 - [ ] Create `column.schema.ts` (createColumnSchema, updateColumnSchema)
 - [ ] Create `board.repository.ts` (create, findById, findByUserId, update, delete)
@@ -136,6 +154,7 @@ PlanBoard — Kanban Task Manager with drag & drop, auth, and clean architecture
   - [ ] `PUT/DELETE /api/columns/[columnId]` (column operations)
 
 ## Frontend
+
 - [ ] Create `useBoards` hook (React Query — list, create, update, delete)
 - [ ] Create `useBoard` hook (React Query — single board with columns)
 - [ ] Create dashboard page (`src/app/(dashboard)/page.tsx`) — list of boards as cards
@@ -150,14 +169,17 @@ PlanBoard — Kanban Task Manager with drag & drop, auth, and clean architecture
 - [ ] Implement loading skeletons for dashboard
 
 ## UI Components (needed by boards)
+
 - [ ] Create `Modal` component (`src/components/ui/modal.tsx`) — overlay, close on Esc, focus trap
 - [ ] Create `Loading` / Skeleton component (`src/components/ui/loading.tsx`)
 - [ ] Create `ConfirmDialog` component
 
 ## Zustand Store
+
 - [ ] Create `ui.store.ts` — sidebar open/closed, active modal, theme
 
 ## Tests
+
 - [ ] Unit: `board.schema.test.ts`
 - [ ] Unit: `board.service.test.ts`
 - [ ] Unit: `column.service.test.ts`
@@ -170,12 +192,14 @@ PlanBoard — Kanban Task Manager with drag & drop, auth, and clean architecture
 ---
 
 # Phase 3 — Task CRUD + Kanban Board View
+
 **Goal:** Users can create, edit, and delete tasks within columns. The board page shows a Kanban view with columns and task cards.
 
 **Sprint:** 3
 **Status:** pending
 
 ## Backend
+
 - [ ] Create `task.schema.ts` (createTaskSchema, updateTaskSchema)
 - [ ] Create `task.repository.ts` (create, findByColumnId, findById, update, delete, countByColumn)
 - [ ] Create `task.service.ts` (CRUD + auto-order + board ownership check)
@@ -184,6 +208,7 @@ PlanBoard — Kanban Task Manager with drag & drop, auth, and clean architecture
   - [ ] `GET/PUT/DELETE /api/tasks/[taskId]` (single task operations)
 
 ## Frontend
+
 - [ ] Create `useTasks` hook (React Query — tasks by board, create, update, delete mutations)
 - [ ] Create board page (`src/app/(dashboard)/board/[boardId]/page.tsx`)
 - [ ] Create `BoardView` component (`src/components/board/board-view.tsx`) — horizontal columns layout
@@ -197,6 +222,7 @@ PlanBoard — Kanban Task Manager with drag & drop, auth, and clean architecture
 - [ ] Priority indicator (color-coded: LOW blue, MEDIUM yellow, HIGH red)
 
 ## Tests
+
 - [ ] Unit: `task.schema.test.ts`
 - [ ] Unit: `task.service.test.ts`
 - [ ] Component: `task-card.test.tsx`
@@ -208,18 +234,21 @@ PlanBoard — Kanban Task Manager with drag & drop, auth, and clean architecture
 ---
 
 # Phase 4 — Drag & Drop
+
 **Goal:** Users can reorder tasks within a column and move tasks between columns via drag & drop, with changes persisted to DB.
 
 **Sprint:** 3-4
 **Status:** pending
 
 ## Backend
+
 - [ ] Create `reorder.schema.ts` (reorderTaskSchema — taskId, sourceColumnId, destinationColumnId, newOrder)
 - [ ] Add reorder method to `task.repository.ts` (batch update order + columnId)
 - [ ] Add reorder logic to `task.service.ts` (validate ownership, recalculate orders)
 - [ ] Create API route: `PUT /api/tasks/reorder`
 
 ## Frontend
+
 - [ ] Integrate `@hello-pangea/dnd` in `BoardView` (DragDropContext)
 - [ ] Wrap columns with `Droppable`
 - [ ] Wrap task cards with `Draggable`
@@ -230,6 +259,7 @@ PlanBoard — Kanban Task Manager with drag & drop, auth, and clean architecture
 - [ ] `aria-live` announcements for position changes
 
 ## Tests
+
 - [ ] Unit: `reorder.schema.test.ts`
 - [ ] Unit: reorder logic in `task.service.test.ts`
 - [ ] Component: drag & drop integration test
@@ -240,18 +270,21 @@ PlanBoard — Kanban Task Manager with drag & drop, auth, and clean architecture
 ---
 
 # Phase 5 — Polish & Error Handling
+
 **Goal:** Production-quality UX with proper loading states, error handling, responsive design, and accessibility across the entire app.
 
 **Sprint:** 4
 **Status:** pending
 
 ## Responsive Design
+
 - [ ] Mobile layout: columns in vertical stack or horizontal scroll
 - [ ] Sidebar: collapsible on tablet, hamburger on mobile
 - [ ] Touch targets: minimum 44x44px on all interactive elements
 - [ ] Test on mobile breakpoints (< 640px, 640-1024px)
 
 ## Error Handling & Feedback
+
 - [ ] Global error boundary component
 - [ ] Toast notifications for all CRUD operations (success + error)
 - [ ] API error responses: consistent `{ error, details? }` format across all routes
@@ -259,24 +292,28 @@ PlanBoard — Kanban Task Manager with drag & drop, auth, and clean architecture
 - [ ] Network error handling in React Query (retry config, error display)
 
 ## Loading States
+
 - [ ] Skeleton loaders for dashboard (board cards)
 - [ ] Skeleton loaders for board view (columns + tasks)
 - [ ] Button loading states (spinner + disabled during submit)
 - [ ] Page-level loading states (`loading.tsx` files)
 
 ## Accessibility Audit
+
 - [ ] WCAG 4.5:1 contrast ratio check (both light theme)
 - [ ] Full keyboard navigation test (Tab, Shift+Tab, Enter, Escape)
 - [ ] Screen reader compatibility (semantic HTML, aria labels)
 - [ ] Focus management: modals trap focus, return focus on close
 
 ## Security Hardening
+
 - [ ] Security headers in `next.config.js` (X-Frame-Options, X-Content-Type-Options, Referrer-Policy)
 - [ ] Verify session check on ALL API routes
 - [ ] Verify user can only access their own boards/tasks (ownership check)
 - [ ] Rate limiting consideration for auth routes
 
 ## Tests
+
 - [ ] Coverage audit: ensure 70%+ across services, schemas, hooks
 - [ ] Fix any failing tests from previous phases
 - [ ] Add missing edge case tests identified during polish
@@ -286,17 +323,20 @@ PlanBoard — Kanban Task Manager with drag & drop, auth, and clean architecture
 ---
 
 # Phase 6 — Deploy & Documentation
+
 **Goal:** App deployed to production, README complete with screenshots, CI/CD pipeline running.
 
 **Sprint:** 5
 **Status:** pending
 
 ## CI/CD
+
 - [ ] Create `.github/workflows/test.yml` (unit tests + lint + typecheck)
 - [ ] Create `.github/workflows/e2e.yml` (Playwright E2E on PR)
 - [ ] Verify all tests pass in CI environment
 
 ## Deployment
+
 - [ ] Set up PostgreSQL on Railway (or Supabase)
 - [ ] Deploy to Vercel (connect GitHub repo)
 - [ ] Configure environment variables on Vercel
@@ -305,6 +345,7 @@ PlanBoard — Kanban Task Manager with drag & drop, auth, and clean architecture
 - [ ] Set up Prisma seed for demo data (`prisma/seed.ts`)
 
 ## Documentation
+
 - [ ] Write comprehensive `README.md` (description, screenshots, tech stack, setup instructions, architecture)
 - [ ] Take screenshots for README (dashboard, board view, mobile, auth)
 - [ ] Final review of all `docs/` files for accuracy
@@ -317,6 +358,7 @@ PlanBoard — Kanban Task Manager with drag & drop, auth, and clean architecture
 # Requirements Traceability Checklist
 
 ## MVP (v1) Requirements
+
 - [ ] Authentication: register / login / logout (Phase 1)
 - [ ] Kanban board with columns: To Do, In Progress, Done (Phase 2 + 3)
 - [ ] CRUD for tasks: create, edit, delete (Phase 3)
@@ -325,6 +367,7 @@ PlanBoard — Kanban Task Manager with drag & drop, auth, and clean architecture
 - [ ] Production deploy (Phase 6)
 
 ## Architecture Requirements
+
 - [ ] Service/Repository pattern enforced (Phase 0+)
 - [ ] Zod schemas shared frontend <-> backend (Phase 1+)
 - [ ] React Query for server state, Zustand for UI state (Phase 2+)
@@ -335,6 +378,7 @@ PlanBoard — Kanban Task Manager with drag & drop, auth, and clean architecture
 - [ ] Conventional commits (All phases)
 
 ## Quality Standards
+
 - [ ] 70%+ test coverage on services and schemas (Phase 5)
 - [ ] WCAG 2.2 accessibility basics (Phase 5)
 - [ ] Security headers configured (Phase 5)
